@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<body>
+<script th:inline="javascript">
+
+
+$(function(){
+	var bno = [[${Board.bno}]];
+	
+	$('#modify').on('click', function(){
+		location.href="/modifyBoard?bno="+bno;
+	});
+	
+	$('#remove').on('click', function(){
+		$.ajax({
+			url:'/deleteBoard?bno='+bno,
+			method:'delete',
+			success:function(data){
+				if ( data == 1 ) {
+					location.href='/';
+				}
+				else {
+					alert("삭제에 실패하였습니다");
+				}
+			}
+		});
+	});
+});
+</script>
+
+<table>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>작성자</th>
+			<th>등록일</th>
+		</tr>
+		
+		<tr th:each="oneBoard : ${Board}">
+			<td th:text="${oneBoard.bno}"></td>
+			<td th:text="${oneBoard.writer}"></td>
+			<td th:text="${oneBoard.contents}"></td>
+			<td th:text="${oneBoard.writer}"></td>
+			<td th:text="${oneBoard.registerDate}"></td>
+		</tr>
+	</table>
+
+<button type="button" id="modify">수정</button>
+<button type="button" id="remove">삭제</button>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Modify Board</title>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+
+<script>
+$(function(){
+	
+	$('#modify').on('click', function(){
+		var param = {};
+		param.title 	= $('#title').val();
+		param.contents 	= $('#contents').val();
+		param.writer	= $('#writer').val();
+		param.bno 		= $('#bno').val();
+		$.ajax({
+			url:'/modifyBoard',
+			method:'PUT',
+			data:param,
+			success:function(data) {
+				if ( data == 1 ) {
+					location.href="/";
+				}
+				else {
+					alert("수정에 실패하였습니다");
+				}
+			}
+		});
+	});
+});
+</script>
+
+	<label for="title">제목 : </label><input type="text" name="title" id='title' th:value="${Board.title}"/>
+	<br>
+ 	<label for="contents">내용 : </label><input type="text" name='contents' id='contents' th:value="${Board.contents}"/>
+ 	<br>
+ 	 	<label for="writer">작성자 : </label><input type="text" name='writer' id='writer' th:value="${Board.writer}"/>
+ 	<br>
+ 	 	<label for="registerDate">작성일 : </label><input type="text" th:value="${Board.registerDate}" readonly/>
+ 	<br>
+	<button type="button" id="modify">수정</button>
+	
+	<input type="hidden" id="bno" th:value="${Board.bno}"/>
+</body>
+</html>

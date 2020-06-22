@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Board List</title>
+</head>
+<body>
+
+	<h1>Board List</h1>
+	
+	<table>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>작성자</th>
+			<th>등록일</th>
+		</tr>
+		
+		<tr th:each="oneBoard : ${boardList}" th:onClick="'window.location.href=\''+ @{/detailBoard?bno={bno}(bno=${oneBoard.bno})}+'\''">
+			<td th:text="${oneBoard.bno}"></td>
+			<td th:text="${oneBoard.title}"></td>
+			<td th:text="${oneBoard.contents}"></td>
+			<td th:text="${oneBoard.writer}"></td>
+			<td th:text="${oneBoard.registerDate}"></td>
+		</tr>
+	</table>
+	
+	<a href="/insertBoard">게시물 등록</a>
+	
+</body>
+</html>
